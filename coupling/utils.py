@@ -18,3 +18,8 @@ def unflatten_params(vec, layer_sizes):
         b = vec[i:i+out_].reshape(out_, 1); i += out_
         weights.append(W); biases.append(b)
     return weights, biases
+
+# set network parameters from a flat vector
+def set_params(net, vec):
+    W, B = unflatten_params(vec, net.layer_sizes)
+    net.weights, net.biases = W, B
