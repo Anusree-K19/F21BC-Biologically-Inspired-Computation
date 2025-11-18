@@ -11,3 +11,7 @@ def relu(x):
 # The hyperbolic tangent (tanh) activation squashes values between -1 and 1
 def tanh(x): 
     return np.tanh(x)
+
+# The softplus activation is a smooth approximation to ReLU
+def softplus(x):
+    return np.log1p(np.exp(x))

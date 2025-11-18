@@ -1,5 +1,5 @@
 import numpy as np
-from .activation import sigmoid, relu, tanh
+from .activation import sigmoid, relu, tanh, softplus
 
 class ANN:
 
@@ -30,6 +30,7 @@ class ANN:
         if name == "relu": return relu(z)
         if name == "sigmoid": return sigmoid(z)
         if name == "tanh": return tanh(z)
+        if name == "softplus":  return softplus(z)
         return z                                                    # linear activation (no change)
 
     def forward(self, x_colvec):

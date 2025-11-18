@@ -56,7 +56,7 @@ class PSO:
 
     def make_informants(self):
 
-        # pick k distinct informants per particle (include self)
+        # [A39 L5-6] choose informant sets for each particle. Pick k distinct informants per particle (include self)
         idxs = np.arange(self.n)
         inf = []
         for i in range(self.n):
@@ -85,7 +85,7 @@ class PSO:
 
     def local_best_of(self, i):
 
-        # [A39 L5] best personal best among informants of particle i
+        # [A39 L5-6] best personal best among informants of particle i
         best_val = np.inf
         best_pos = None
         for j in self.particles[i].informants:
@@ -97,7 +97,7 @@ class PSO:
 
     def apply_bounds(self, pos, vel):
 
-        # reflective boundary handling
+        # reflective boundary handling (Not from the A39 pseudocode, this is an addition)
         lo, hi = self.bounds
         p, v = pos.copy(), vel.copy()
         below, above = p < lo, p > hi  
@@ -121,7 +121,7 @@ class PSO:
 
     def step(self, fitness_fn):
 
-        # [A39 L6-14] velocity + position update, then pbest update
+        # [A39 L6-14] velocity and position update, then pbest update
         for i, p in enumerate(self.particles):
             lbest_pos, _ = self.local_best_of(i)                    # informants' best
 
@@ -139,11 +139,11 @@ class PSO:
 
             # evaluate and update personal best
             val = float(fitness_fn(p.pos))
-            if val < p.pbest_val:                                 # [A39 L12-13]
+            if val < p.pbest_val:                                   # [A39 L12-13]
                 p.pbest_val = val
                 p.pbest_pos = p.pos.copy()
 
             # optional global best track (handy for logging)
-            if val < self.gbest_val:
+            if val < self.gbest_val:                                # [A39 L14]        
                 self.gbest_val = val
                 self.gbest_pos = p.pos.copy()
