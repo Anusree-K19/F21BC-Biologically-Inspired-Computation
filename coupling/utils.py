@@ -1,13 +1,13 @@
 import numpy as np
 
-# turn all weights + biases into one flat vector
+# To turn all weights and biases into one flat vector
 def flatten_params(weights, biases):
     flat = []
     for W, b in zip(weights, biases):
         flat.append(W.ravel()); flat.append(b.ravel())
     return np.concatenate(flat)
 
-# rebuild weights + biases from a flat vector (fixed architecture)
+# To rebuild weights and biases from a flat vector (fixed architecture)
 def unflatten_params(vec, layer_sizes):
     weights, biases = [], []
     i = 0
@@ -19,7 +19,7 @@ def unflatten_params(vec, layer_sizes):
         weights.append(W); biases.append(b)
     return weights, biases
 
-# set network parameters from a flat vector
+# To set network parameters from a flat vector
 def set_params(net, vec):
     W, B = unflatten_params(vec, net.layer_sizes)
     net.weights, net.biases = W, B
