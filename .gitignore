@@ -1,5 +1,9 @@
 venv/
+.venv/
+.venv-repro/
 __pycache__/
 .ipynb_checkpoints/
+.reproduction/
+*.bundle
 *.log
 *.zip
