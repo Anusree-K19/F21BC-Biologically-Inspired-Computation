@@ -30,7 +30,26 @@ The full comparison matched every printed concrete MAE at its saved precision, i
 | Sphere objective at initialisation | 39.65255357793565 | 39.65255357793565 |
 | Sphere objective after 20 steps | 0.2840603311935848 | 0.7786059792022677 |
 
-The sphere difference also appeared in the direct run. Git history shows that the original value was already present when the sphere experiment was introduced. Its cause remains unresolved. The illustrative ANN example draws an unseeded input, so its scalar output and activation ranges vary. The diagnostic working-directory line also varies by machine.
+The illustrative ANN example draws an unseeded input, so its scalar output and activation ranges vary. The diagnostic working-directory line also varies by machine.
+
+## Sphere benchmark investigation
+
+The earliest PSO commit already contains the archived value, `0.2840603311935848`, in the sphere cell's saved output. The executable source of that cell and `pso/pso.py` is identical across the first PSO commit, the activation-extension commit and the final coursework snapshot, as verified by comparing their Python syntax trees. The archived output also stayed identical. [First PSO commit](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/f9aeeb6) · [Activation extension](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/26e04ca) · [Final comment edits](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/83baaa5)
+
+The cell creates a fresh swarm with seed 0, 10 particles, five dimensions, bounds of −5 to 5 and three informants per particle. It uses the default inertia 0.729 and cognitive and social coefficients of 1.494, then takes 20 steps on the sum-of-squares objective. Each swarm creates its own NumPy `default_rng` (PCG64 in the tested environments). Changing the global NumPy seed and consuming up to 8,000 draws from the global generator before running the cell gave the same result. The earlier unseeded ANN demo therefore has no effect on this benchmark.
+
+The unchanged historical cell and module were run together in fresh Windows processes under the following configurations.
+
+| Python | NumPy | Best objective after 20 steps |
+| --- | --- | ---: |
+| 3.11.0 (notebook metadata) | 2.3.4 (repository pin) | 0.7786059792022677 |
+| 3.11.0 | 1.23.5, 1.26.4, 2.0.2, 2.2.6, 2.3.3 | 0.7786059792022677 |
+| 3.12.10 | 2.3.4 | 0.7786059792022677 |
+| 3.14.3 | 2.4.4 | 0.7786059792022677 |
+
+The particle positions, velocities, best values, informant sets and generator state matched exactly from initialisation through step 20 in each test. The best value reached 0.7786059792022677 at step 19 and still held at step 20. Continuing the same run first passed below the archived value at step 33 (`0.20254078844418322`). The best value never equalled the archived one in the first 500 steps. [NumPy random stream compatibility](https://numpy.org/doc/stable/reference/random/compatibility.html)
+
+**The cause of the archived value remains unresolved.** The original notebook saved the sphere cell at execution count 10, before an explicit `importlib.reload(pso.pso)` at count 17. A module already loaded in the original kernel or output retained after an edit could explain the discrepancy. The notebook preserves the printed values and execution counts, but lacks a record of the live module source or the exact runtime build for that cell. The sphere test is independent of the concrete dataset and the ANN. Its archived result remains intact.
 
 ## Dataset and history review
 

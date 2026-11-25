@@ -69,7 +69,9 @@ The values below come from the coursework [notebook](experiments/test.ipynb). Er
 | Same coefficients, 10 particles × 450 iterations | 7.365 | 7.407 |
 | Training-fitness early-stopping trial | 7.365 | 7.407 |
 
-The 30 × 150 and 10 × 450 runs each had 4,500 evaluations during updates, plus one initial evaluation per particle. These plots show the best training MAE recorded from initialisation through the final iteration.
+The three initial PSO runs used ReLU hidden layers, 30 particles, 150 iterations and parameter bounds of −1 to 1. The wider-bounds trial kept the original coefficients. The next trial changed the coefficients and the number of informants together.
+
+The 30 × 150, 50 × 90 and 10 × 450 allocations each had 4,500 evaluations during updates, plus one initial evaluation per particle. These plots show the best training MAE recorded from initialisation through the final iteration.
 
 ![Best training MAE by iteration for the 30-particle, 150-iteration run](docs/plots/pso-convergence-30x150.png)
 
@@ -91,7 +93,7 @@ The sweeps report mean ± standard deviation across ten optimiser seeds (0–9) 
 
 Fixed ReLU had the lowest mean test MAE among the tested activation methods on this split. The original activation-comparison printout says five seeds. Its loop and saved plot both use ten.
 
-The portfolio audit reproduced the reported concrete MAEs at their saved precision and matched all 11 plot PNGs byte for byte. The separate sphere smoke test started at the same objective value (39.652554) but reached 0.778606 after 20 steps, versus 0.284060 in the archive. [Verification details](docs/reproducibility.md)
+The portfolio audit reproduced the reported concrete MAEs at their saved precision and matched all 11 plot PNGs byte for byte. The separate sphere smoke test has an unresolved archival discrepancy. The earliest committed code returns 0.778606 after 20 steps in the recorded Python version with the pinned NumPy version. The archive reports 0.284060. [Sphere investigation](docs/reproducibility.md#sphere-benchmark-investigation)
 
 ## Research limitations
 
@@ -102,8 +104,8 @@ The portfolio audit reproduced the reported concrete MAEs at their saved precisi
 
 ## Contributions and licensing
 
-- **Nimijith (NIMIJITH N J)** is the author recorded for the baseline ANN and data/evaluation pipeline, informant PSO and ANN coupling, experimental comparisons, activation-search extension and notebook presentation updates. [Baseline ANN](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/3f093aa) · [PSO and coupling](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/f9aeeb6) · [Comparisons and activation search](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/26e04ca)
-- **Anusree-K19** is the author recorded for the initial repository commit and project description. [Initial commit](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/467faa0)
+- **Nimijith (GitHub `NIMIJITHNJ`)** authored the commits for the baseline ANN and data/evaluation pipeline, informant PSO and ANN coupling, experimental comparisons, activation-search extension, final notebook comment updates, and addition of the coursework copy of Yeh's dataset. [Baseline ANN](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/3f093aa) · [PSO and coupling](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/f9aeeb6) · [Comparisons and activation search](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/26e04ca) · [CSV addition](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/28eaef8) · [Notebook comments](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/83baaa5)
+- **Anusree-K19** authored the initial repository commit, which added the project description. [Initial commit](https://github.com/Anusree-K19/F21BC-Biologically-Inspired-Computation/commit/467faa0)
 
 These credits describe contributions visible in Git. Work such as offline collaboration, discussion and review may be absent from that record.
 
